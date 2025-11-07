@@ -210,7 +210,7 @@ jobs:
           scripts/run_in_build_env.sh 'pip3 install ./out/controller/python/home_assistant_matter_clusters-${{ needs.build_prepare.outputs.version }}-py3-none-any.whl'
           scripts/run_in_build_env.sh 'pip3 install ./out/controller/python/home_assistant_matter_core-${{ needs.build_prepare.outputs.version }}-cp37-abi3-manylinux_2_31_${{ matrix.arch.name }}.whl'
           scripts/run_in_build_env.sh 'pip3 install ./out/controller/python/home_assistant_matter_repl-${{ needs.build_prepare.outputs.version }}-py3-none-any.whl'
-          scripts/run_in_build_env.sh '(cd src/controller/python/test/unit_tests/ && python3 -m unittest -v)'
+          scripts/run_in_build_env.sh '(cd src/controller/python/tests/ && python3 -m unittest -v)'
       - name: Upload wheels as artifacts
         uses: actions/upload-artifact@v4
         with:
@@ -304,7 +304,7 @@ jobs:
           scripts/run_in_build_env.sh 'pip3 install ./out/controller/python/home_assistant_matter_clusters-${{ needs.build_prepare.outputs.version }}-py3-none-any.whl'
           scripts/run_in_build_env.sh 'pip3 install ./out/controller/python/home_assistant_matter_core-${{ needs.build_prepare.outputs.version }}-cp37-abi3-macosx_14_0_${{ matrix.arch.name }}.whl'
           scripts/run_in_build_env.sh 'pip3 install ./out/controller/python/home_assistant_matter_repl-${{ needs.build_prepare.outputs.version }}-py3-none-any.whl'
-          scripts/run_in_build_env.sh '(cd src/controller/python/test/unit_tests/ && python3 -m unittest -v)'
+          scripts/run_in_build_env.sh '(cd src/controller/python/tests/ && python3 -m unittest -v)'
       - name: Upload wheels as artifacts
         uses: actions/upload-artifact@v4
         with:
