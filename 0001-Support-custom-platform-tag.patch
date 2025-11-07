@@ -1,4 +1,4 @@
-From a70e322f01b414ef47efb226a316cac44b5995e8 Mon Sep 17 00:00:00 2001
+From 981854e9066977399a04e316fb63cfa4331261c8 Mon Sep 17 00:00:00 2001
 From: Stefan Agner <stefan@agner.ch>
 Date: Tue, 22 Nov 2022 10:51:17 +0100
 Subject: [PATCH] Support custom platform tag
@@ -9,7 +9,7 @@ Subject: [PATCH] Support custom platform tag
  2 files changed, 14 insertions(+), 14 deletions(-)
 
 diff --git a/build/chip/python_wheel.gni b/build/chip/python_wheel.gni
-index ac00fe1404..597a49783d 100644
+index a41aff0a95..4a70c99a54 100644
 --- a/build/chip/python_wheel.gni
 +++ b/build/chip/python_wheel.gni
 @@ -18,10 +18,23 @@ import("//build_overrides/pigweed.gni")
@@ -21,8 +21,8 @@ index ac00fe1404..597a49783d 100644
 +}
 +
  declare_args() {
-   chip_python_version = "0.0"
-   chip_python_package_prefix = "chip"
+   chip_python_version = "1.0.0"
+   chip_python_package_prefix = "matter"
    chip_python_supports_stack_locking = chip_system_config_locking != "none"
 +
 +  if (current_os == "mac") {
@@ -35,12 +35,12 @@ index ac00fe1404..597a49783d 100644
 +  }
  }
  
- template("chip_python_wheel_action") {
+ template("matter_python_wheel_action") {
 diff --git a/src/controller/python/BUILD.gn b/src/controller/python/BUILD.gn
-index 648e4b39aa..8788bb401b 100644
+index 76de663119..cdc70db7fb 100644
 --- a/src/controller/python/BUILD.gn
 +++ b/src/controller/python/BUILD.gn
-@@ -25,10 +25,6 @@ import("${chip_root}/src/platform/python.gni")
+@@ -27,10 +27,6 @@ import("${chip_root}/src/platform/python.gni")
  import("${chip_root}/src/system/system.gni")
  import("${dir_pw_unit_test}/test.gni")
  
@@ -51,7 +51,7 @@ index 648e4b39aa..8788bb401b 100644
  config("controller_wno_deprecate") {
    cflags = [ "-Wno-deprecated-declarations" ]
  }
-@@ -297,16 +293,7 @@ chip_python_wheel_action("chip-core") {
+@@ -357,16 +353,7 @@ matter_python_wheel_action("matter-core") {
      cpu_tag = current_cpu
    }
  
@@ -67,8 +67,8 @@ index 648e4b39aa..8788bb401b 100644
 -  py_platform_tag = py_platform_tag + "_" + cpu_tag
 +  py_platform_tag = chip_python_platform_tag  + "_" + cpu_tag
  
-   tags = "cp37-abi3-" + py_platform_tag
- 
+   if (chip_support_commissioning_in_controller) {
+     lib_name = "_ChipDeviceCtrl.so"
 -- 
-2.50.0
+2.51.2
 
